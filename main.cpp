@@ -1,10 +1,11 @@
 #include <iostream>
 #include <cstring>
+#include <cstdio>
 
 void causeBufferOverflow() {
-    char smallBuffer[5];
-    // Security Flaw: copy 12 bytes into a 5-byte buffer array
-    std::strcpy(smallBuffer, "UnsafeString"); 
+    char smallBuffer[13];
+    // Fixed: bounded write with enough space for "UnsafeString" and null terminator
+    std::snprintf(smallBuffer, sizeof(smallBuffer), "%s", "UnsafeString");
     std::cout << "Buffer contents: " << smallBuffer << std::endl;
 }
 
